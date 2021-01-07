@@ -8,30 +8,30 @@ class DataStatistics {
   // 全部数据、黑白名单内容读取并初始化
   constructor() {
     // 白名单
-    jsonFile.readFile('data/whiteList.json')
-      .then((res) => {
-        this.whiteList = res;
-      }, (err) => {
-        this.whiteList = {};
-        jsonFile.writeFile('data/whiteList.json', {});
-      });
+    //jsonFile.readFile('data/whiteList.json')
+    //  .then((res) => {
+    //    this.whiteList = res;
+    //  }, (err) => {
+    //    this.whiteList = {};
+    //    jsonFile.writeFile('data/whiteList.json', {});
+    //  });
 
     // 黑名单
-    jsonFile.readFile('data/blackList.json')
-      .then((res) => {
-        this.blackList = res;
-      }, (err) => {
-        this.blackList = {};
-        jsonFile.writeFile('data/blackList.json', {});
-      });
+    //jsonFile.readFile('data/blackList.json')
+    //  .then((res) => {
+    //    this.blackList = res;
+    //  }, (err) => {
+    //    this.blackList = {};
+    //    jsonFile.writeFile('data/blackList.json', {});
+    //  });
 
-    jsonFile.readFile('data/tempList.json')
-      .then((res) => {
-        this.tempList = res;
-      }, (err) => {
-        this.tempList = {};
-        jsonFile.writeFile('data/tempList.json', {});
-      });
+    //jsonFile.readFile('data/tempList.json')
+    //  .then((res) => {
+    //    this.tempList = res;
+    //  }, (err) => {
+    //   this.tempList = {};
+    //   jsonFile.writeFile('data/tempList.json', {});
+    //  });
     this.updateTime = moment();
     this.lastSaveTime = moment();
     this.setSafeHead();
@@ -95,24 +95,24 @@ class DataStatistics {
     const now = moment();
     agent.browserVersion = `${agent.family} ${agent.major}.${agent.minor}.${agent.patch}`;
 
-    if (!this.ipCheck(ip, req, agent)) {
-      const t = this.getBlackTime(ip);
-      return res.send({
-        result: 400,
-        errMsg: `你是不是接口访问次数太多了，${t.format('YYYY-MM-DD HH:mm:ss')}之前不能再用了！`,
-      })
-    }
+    //if (!this.ipCheck(ip, req, agent)) {
+    //  const t = this.getBlackTime(ip);
+    //  return res.send({
+    //    result: 400,
+    //    errMsg: `你是不是接口访问次数太多了，${t.format('YYYY-MM-DD HH:mm:ss')}之前不能再用了！`,
+    //  })
+    //}
 
     // 找不到 ip 指向本地的就算了
     if (ip === '::ffff:127.0.0.1' || ip === '::1') {
       return next();
     }
-    if ({ okhttp: true }[agent.family] || { Other: true }[os.family] ) {
-      return res.send({
-        result: 400,
-        errMsg: `自己起一个 node 服务 这么难？？?`
-      })
-    }
+    //if ({ okhttp: true }[agent.family] || { Other: true }[os.family] ) {
+    //  return res.send({
+    //    result: 400,
+    //   errMsg: `自己起一个 node 服务 这么难？？?`
+    //  })
+    //}
     const data = {
       browser: agent.family,
       browserVersion: agent.browserVersion,
@@ -140,6 +140,9 @@ class DataStatistics {
 
   // 检查IP 是否可以继续调用
   ipCheck(ip, req, agent) {
+    if(true){
+      return true;
+    }
     const now = this.updateTime.valueOf();
     const ipArr = ip.split('.');
     const preIp = `${ipArr[0]}.${ipArr[1]}`;
